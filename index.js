@@ -20,7 +20,7 @@ const menuSchema = new mongoose.Schema({
     isAvailable: {type: Boolean, default: true},
     description: {type: String, default: 'No description'},
    })
-// Define the model for the MenuItem
+// Define the model for the menu
    const menu = mongoose.model("menu", menuSchema, "Menu")
 
 // Define a POST route at /menu/test that adds a test menu item to the database
@@ -34,7 +34,38 @@ app.post("/menu/test", async (req, res)=> {
     res.json(menu1);
   })
 
-  async function prepopulateDb() {
+  
+
+// Define a GET route at /menu that returns all menu items as a JSON
+  app.get('/menu', async (req, res) => {
+    const response = await menu.find();
+    res.json(response);
+})
+
+
+// Define a POST route at /menu/new that adds a new menu item
+app.post("/menu/new", async (req, res)=> {
+    const menu1 = new menu({
+      name: req.body.name,
+      cost: req.body.cost,
+      isAvailable: req.body.isAvailable,
+      description: req.body.description,
+    }).save()
+    res.json(menu1);
+  })
+// Admin Page
+  app.delete('/delete/menu/:id', async (req, res) =>{
+    const response = await menu.findOneAndDelete({_id: req.params.id})
+    res.json(response)
+  })
+//Admin Page
+  app.patch("/patch/menu/:id", async (req, res) => {
+    const response = await menu.findOneAndUpdate({ id: req.params._id }, 
+    req.body, {new: true})
+    res.json(response);
+    });
+    
+async function prepopulateDb() {
     try {
         // Feel free to change the names you want to populate
         await menu.insertMany([
@@ -50,44 +81,16 @@ app.post("/menu/test", async (req, res)=> {
         console.error('Error prepopulating database:', err);
     }
 }
-await prepopulateDb();
-
-// Define a GET route at /menu that returns all menu items as a JSON
-  app.get('/menu', async (req, res) => {
-    const response = await menu.find();
-    res.json(response);
-})
 
 
-// Define a POST route at /menu/new that adds a new menu item
-app.post("/menu/new", async (req, res)=> {
-    const menu1 = new MenuItem({
-      name: req.body.name,
-      cost: req.body.cost,
-      isAvailable: req.body.isAvailable,
-      description: req.body.description,
-    }).save()
-    res.json(menu1);
-  })
-// Admin Page
-  app.delete('/delete/menu/:id', async (req, res) =>{
-    const response = await MenuItem.findOneAndDelete({_id: req.params.id})
-    res.json(response)
-  })
-//Admin Page
-  app.patch("/patch/menu/:id", async (req, res) => {
-    const response = await MenuItem.findOneAndUpdate({ id: req.params._id }, 
-    req.body, {new: true})
-    res.json(response);
-    });
-
-
+async function startServer() {
   await mongoose.connect("mongodb+srv://SE12:CSH2025@cluster0.zc3jx.mongodb.net/corey?retryWrites=true&w=majority&appName=Cluster0");
 
+  //prepopulateDb();
 
     app.listen(3000, () => {
         console.log(`Server running.`);
     });
 
-
-startServer();
+  }
+ startServer();
