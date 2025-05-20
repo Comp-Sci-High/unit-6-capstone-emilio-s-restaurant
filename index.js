@@ -14,6 +14,11 @@ app.use((req, res, next) => {
     next();
 });
 
+  app.get("/",(req,res)=>{
+    res.sendFile(__dirname + "/public/index.html")
+  })
+
+
 const menuSchema = new mongoose.Schema({
     name: {type: String, required: true, unique: true},
     cost: {type: Number, required: true},
