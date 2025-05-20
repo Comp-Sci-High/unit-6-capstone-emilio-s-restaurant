@@ -43,9 +43,8 @@ app.post("/menu/test", async (req, res)=> {
 
 // Define a GET route at /menu that returns all menu items as a JSON
   app.get('/menu', async (req, res) => {
-    const response = await menu.find();
-    res.json(response);
-})
+    const items = await menu.find({});
+    res.render("menu.ejs", { menu: items });})
 
 
 // Define a POST route at /menu/new that adds a new menu item
@@ -70,22 +69,22 @@ app.post("/menu/new", async (req, res)=> {
     res.json(response);
     });
     
-async function prepopulateDb() {
-    try {
-        // Feel free to change the names you want to populate
-        await menu.insertMany([
-            { name: "Crab" },
-            { name: "Fried Fish" },
-            { name: "Tostones" },
-            { name: "Fries" },
-            { name: "Maduros" },
-        ]);
+// //async function prepopulateDb() {
+//     try {
+//           Feel free to change the names you want to populate
+//         await menu.insertMany([
+//             { name: "Crab" },
+//             { name: "Fried Fish" },
+//             { name: "Tostones" },
+//             { name: "Fries" },
+//             { name: "Maduros" },
+//         ]);
 
-        console.log('Food names added successfully!');
-    } catch (err) {
-        console.error('Error prepopulating database:', err);
-    }
-}
+//         console.log('Food names added successfully!');
+//     } catch (err) {
+//         console.error('Error prepopulating database:', err);
+//     }
+// }
 
 
 async function startServer() {

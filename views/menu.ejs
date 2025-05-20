@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Menu | Spanish Restaurant</title>
+  <link rel="stylesheet" href="menu.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">LOGO</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">Menu</a></li>
+        <li><a href="#">Locations</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Reviews</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="menu-hero">
+    <h1>Nuestro Menú</h1>
+    <p>Delicias auténticas de España, servidas con pasión.</p>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories">
+    <button>Tapas</button>
+    <button>Paellas</button>
+    <button>Pescados</button>
+    <button>Carnes</button>
+    <button>Postres</button>
+    <button>Bebidas</button>
+
+  </section>
+
+  <!-- Menu Grid -->
+   
+  <section class="menu-grid">
+    <div class="menu-item">
+         <% for (let i = 0; i < menu.length; i++) { %>
+      <div class="item-image"></div>
+      <h2><%= menu[i].menu %></h2>
+      <div class="item-info">
+        <h3>Patatas Bravas</h3>
+        <p>Crispy potatoes with spicy tomato sauce</p>
+        <span>$6.50</span>
+      </div>
+    </div>
+ <% } %>
+</section>
+</body>
+</html>
