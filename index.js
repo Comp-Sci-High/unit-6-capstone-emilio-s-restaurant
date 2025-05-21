@@ -47,6 +47,12 @@ app.post("/menu/test", async (req, res)=> {
     res.render("menu.ejs", { menu: items });})
 
 
+    app.get('/menu/items/:name', async (req, res) => {
+    const itemsName = req.params.name;
+    const foodItem = await menu.findOne({name: itemName});
+    res.render("items.ejs", { item: foodItem });})
+
+
 // Define a POST route at /menu/new that adds a new menu item
 app.post("/menu/new", async (req, res)=> {
     const menu1 = new menu({
